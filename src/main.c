@@ -1,4 +1,5 @@
 #include "util/c_wrapper.util.hpp"
+#include "stm32l0xx_hal.h"
 
 int main(void)
 {

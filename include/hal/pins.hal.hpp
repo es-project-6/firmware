@@ -1,0 +1,4 @@
+#pragma once
+
+#define ONBOARD_LED_PIN GPIO_PIN_5
+#define ONBOARD_LED_GPIO_PORT GPIOA

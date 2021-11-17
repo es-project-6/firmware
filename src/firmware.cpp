@@ -1,26 +1,21 @@
 #include "firmware.hpp"
+#include "hal/hal.hpp"
+#include "hal/pins.hal.hpp"
+#include "hal/led.hal.hpp"
 
-void LED_Init();
+#include "stm32l0xx_hal.h"
+
+HAL::LED *onboardLED;
 
 void firmwareSetup()
 {
   HAL_Init();
-  LED_Init();
+  HAL::init();
+  onboardLED = new HAL::LED(ONBOARD_LED_PIN, ONBOARD_LED_GPIO_PORT);
 }
 
 void firmwareLoop()
 {
-  HAL_GPIO_TogglePin(LED_GPIO_PORT, LED_PIN);
+  onboardLED->toggle();
   HAL_Delay(200);
-}
-
-void LED_Init()
-{
-  LED_GPIO_CLK_ENABLE();
-  GPIO_InitTypeDef GPIO_InitStruct;
-  GPIO_InitStruct.Pin = LED_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-  HAL_GPIO_Init(LED_GPIO_PORT, &GPIO_InitStruct);
 }
