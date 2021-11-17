@@ -1,4 +1,5 @@
 #include "hal/custom_hal.h"
+#include "hal/adc_hal.h"
 
 #define LED_GPIO_CLK_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
 
@@ -6,6 +7,7 @@ void CustomHAL_Init(void)
 {
   LED_Init();
   MX_USART2_UART_Init();
+  MX_ADC_Init();
 }
 
 void LED_Init()

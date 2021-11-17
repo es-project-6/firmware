@@ -20,6 +20,8 @@ int main(void)
   int counter = 0;
   while (1)
   {
+    uint32_t val = getADCValue();
+
     //HAL_UART_Receive(&huart2, data, 10, 1000);
 
     uint8_t data[100];
