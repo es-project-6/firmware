@@ -14,6 +14,11 @@ namespace HAL
   {
     ADC_ChannelConfTypeDef sConfig = {0};
 
+    /* USER CODE BEGIN ADC_Init 1 */
+
+    /* USER CODE END ADC_Init 1 */
+    /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
     hadc.Instance = ADC1;
     hadc.Init.OversamplingMode = DISABLE;
     hadc.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
@@ -33,10 +38,15 @@ namespace HAL
     hadc.Init.LowPowerAutoPowerOff = DISABLE;
     if (HAL_ADC_Init(&hadc) != HAL_OK)
     {
+      HAL::USART::printf("State Code: %d\r\n", hadc.State);
+      HAL::USART::printf("Error Code: %d\r\n", hadc.ErrorCode);
       HAL::Error_Handler("HAL_ADC_Init failed");
     }
-    /* Configure for the selected ADC regular channel to be converted.  */
-    sConfig.Channel = ADC_CHANNEL_0;
+    /** Configure for the selected ADC regular channel to be converted.
+  */
+    sConfig.Channel = ADC_CHANNEL_10;
+    sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
+    if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
     {
       HAL::Error_Handler("HAL_ADC_ConfigChannel failed");
     }
@@ -44,69 +54,10 @@ namespace HAL
 
   uint32_t AdConverter::getValue()
   {
-    HAL_StatusTypeDef startStatus = HAL_ADC_Start(&hadc);
-    if (startStatus != HAL_OK)
-    {
-      HAL::USART::printf("HAL_ADC_Start failed with code: %d\r\n", startStatus);
-    }
-
-    HAL_StatusTypeDef status = HAL_ADC_PollForConversion(&hadc, 100);
-
-    if (status != HAL_OK)
-    {
-      HAL::USART::printf("ADC read failed with code: %d\r\n", status);
-    }
-
-    uint32_t val = HAL_ADC_GetValue(&hadc);
-    HAL_ADC_Stop(&hadc);
+    HAL_ADC_Start(&hadc);
+    HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
+    uint16_t val = HAL_ADC_GetValue(&hadc);
     return val;
   }
 
-}
-
-/* MSP Functions */
-
-/**
-* @brief ADC MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hadc: ADC handle pointer
-* @retval None
-*/
-void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if (hadc->Instance == ADC1)
-  {
-    /* Peripheral clock enable */
-    __HAL_RCC_ADC1_CLK_ENABLE();
-
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**ADC GPIO Configuration
-    PA1     ------> ADC_IN1
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_0;
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  }
-}
-
-/**
-* @brief ADC MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hadc: ADC handle pointer
-* @retval None
-*/
-void HAL_ADC_MspDeInit(ADC_HandleTypeDef *hadc)
-{
-  if (hadc->Instance == ADC1)
-  {
-    /* Peripheral clock disable */
-    __HAL_RCC_ADC1_CLK_DISABLE();
-
-    /**ADC GPIO Configuration
-    PA1     ------> ADC_IN1
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0);
-  }
 }

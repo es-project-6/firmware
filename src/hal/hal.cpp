@@ -10,7 +10,7 @@ namespace HAL
   {
     HAL_Init();
     Clock::init();
-    __HAL_RCC_GPIOA_CLK_ENABLE();
+    MX_GPIO_Init();
   }
 
   void Error_Handler()
@@ -35,10 +35,15 @@ namespace HAL
   }
 }
 
-/* MSP FUnctions */
-
-void HAL_MspInit(void)
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+void MX_GPIO_Init(void)
 {
-  __HAL_RCC_SYSCFG_CLK_ENABLE();
-  __HAL_RCC_PWR_CLK_ENABLE();
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
 }
