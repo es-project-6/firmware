@@ -5,17 +5,15 @@
 
 namespace HAL
 {
-  class LED
+  class GPIO
   {
-  private:
+  protected:
     uint32_t pin;
     GPIO_TypeDef *port;
-
     void init();
 
   public:
-    LED(uint32_t, GPIO_TypeDef *);
-    ~LED();
-    void toggle();
+    GPIO(uint32_t, GPIO_TypeDef *);
+    ~GPIO();
   };
 }
