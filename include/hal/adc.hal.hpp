@@ -10,12 +10,10 @@ namespace HAL
   class AdConverter
   {
   private:
-    ADC_HandleTypeDef hadc;
-    void init();
+    static ADC_HandleTypeDef hadc;
 
   public:
-    AdConverter();
-    ~AdConverter();
-    uint32_t getValue();
+    static void init();
+    static uint32_t getValue();
   };
 }

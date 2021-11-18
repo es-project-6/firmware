@@ -5,10 +5,8 @@
 
 namespace HAL
 {
-  AdConverter::AdConverter()
-  {
-    this->init();
-  }
+
+  ADC_HandleTypeDef AdConverter::hadc;
 
   void AdConverter::init()
   {
@@ -44,7 +42,7 @@ namespace HAL
     }
     /** Configure for the selected ADC regular channel to be converted.
   */
-    sConfig.Channel = ADC_CHANNEL_10;
+    sConfig.Channel = ADC_CHANNEL_8;
     sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
     if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
     {
