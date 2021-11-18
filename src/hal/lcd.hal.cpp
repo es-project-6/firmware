@@ -11,7 +11,7 @@ namespace HAL
     delay(15);
     writeInstruction(FUNCTION_SET | TWO_LINES | FONT_5X8);
     delay(39);
-    writeInstruction(DISPLAY_CONTROL | DISPLAY_ON | CURSOR_ON | CURSOR_BLINK);
+    writeInstruction(DISPLAY_CONTROL | DISPLAY_ON);
     delayMicros(39);
     writeInstruction(CLEAR_DISPLAY);
     delay(2);
