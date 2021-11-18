@@ -59,8 +59,9 @@ namespace HAL
     static void write(uint8_t value, bool instruction);
     static void writeInstruction(uint8_t value);
     static void writeData(uint8_t value);
-    static void printChar(char character);
-    static void printString(const char *str);
+    static void print(char character);
+    static void print(const char *str);
     static void clearDisplay();
+    static void printf(const char *format, ...);
   };
 }

@@ -20,13 +20,14 @@ void firmwareSetup()
   HAL::LcDisplay::init();
   HAL::USART::print("Setup done\r\n");
 
-  HAL::LcDisplay::printString("Moin!");
-
   while (1)
   {
     onboardLED->toggle();
 
-    HAL_Delay(80);
+    HAL::LcDisplay::clearDisplay();
+    HAL::LcDisplay::printf("Wert: %d", HAL::AdConverter::getValue());
+
+    HAL_Delay(500);
   }
 }
 

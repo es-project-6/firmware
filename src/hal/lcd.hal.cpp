@@ -2,6 +2,10 @@
 #include "hal/i2c.hal.hpp"
 #include "util/delay.hpp"
 
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+
 namespace HAL
 {
   uint8_t LcDisplay::cursorPosition = LCD_FIRST_LINE_BEGIN;
@@ -33,7 +37,7 @@ namespace HAL
     write(value, false);
   }
 
-  void LcDisplay::printChar(char character)
+  void LcDisplay::print(char character)
   {
     if (cursorPosition == LCD_FIRST_LINE_BEGIN)
     {
@@ -56,7 +60,7 @@ namespace HAL
     }
   }
 
-  void LcDisplay::printString(const char *str)
+  void LcDisplay::print(const char *str)
   {
     if (str == NULL)
     {
@@ -65,8 +69,19 @@ namespace HAL
     char character = 0;
     while ((character = *str++) != '\0')
     {
-      printChar(character);
+      print(character);
     }
+  }
+
+  void LcDisplay::printf(const char *format, ...)
+  {
+    char buff[100];
+    va_list va;
+    va_start(va, format);
+    vsprintf(buff, format, va);
+    va_end(va);
+
+    return print(buff);
   }
 
   void LcDisplay::clearDisplay()
