@@ -5,6 +5,7 @@
 #include "hal/usart.hal.hpp"
 #include "hal/adc.hal.hpp"
 #include "hal/i2c.hal.hpp"
+#include "hal/lcd.hal.hpp"
 
 #include "stdio.h"
 
@@ -14,8 +15,12 @@ void firmwareSetup()
 
   HAL::LED *onboardLED = new HAL::LED(ONBOARD_LED_PIN, ONBOARD_LED_GPIO_PORT);
   HAL::USART::init();
-  // HAL::AdConverter *adc = new HAL::AdConverter();
   HAL::AdConverter::init();
+  HAL::I2C::init();
+  HAL::LcDisplay::init();
+  HAL::USART::print("Setup done\r\n");
+
+  HAL::LcDisplay::printString("Moin!");
 
   while (1)
   {
