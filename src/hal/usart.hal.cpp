@@ -3,6 +3,8 @@
 #include "hal/pins.hal.hpp"
 
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 namespace HAL
 {
@@ -20,18 +22,29 @@ namespace HAL
     USART::huart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
     if (HAL_UART_Init(&USART::huart) != HAL_OK)
     {
-      HAL::Error_Handler();
+      HAL::Error_Handler("HAL_UART_Init failed");
     }
   }
 
-  HAL_StatusTypeDef USART::print(char data[], size_t size)
+  HAL_StatusTypeDef USART::print(const char data[], size_t size)
   {
-    return HAL_UART_Transmit(&USART::huart, reinterpret_cast<uint8_t *>(data), size, 1000);
+    return HAL_UART_Transmit(&USART::huart, (uint8_t *)data, size, 1000);
   }
 
-  HAL_StatusTypeDef USART::print(char *str)
+  HAL_StatusTypeDef USART::print(const char *str)
   {
-    return print(str, strlen(str));
+    return print((char *)str, strlen(str));
+  }
+
+  HAL_StatusTypeDef USART::printf(const char *format, ...)
+  {
+    char buff[100];
+    va_list va;
+    va_start(va, format);
+    vsprintf(buff, format, va);
+    va_end(va);
+
+    return print((char *)buff, strlen(buff));
   }
 
   void USART::serialClearScreen()
