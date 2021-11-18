@@ -6,13 +6,13 @@
 
 namespace HAL
 {
-  class AdConverter
+  class I2C
   {
   private:
-    static ADC_HandleTypeDef hadc;
+    static I2C_HandleTypeDef hi2c1;
 
   public:
     static void init();
-    static uint32_t getValue();
+    static HAL_StatusTypeDef send(uint16_t, uint8_t *, uint16_t, uint32_t = 1000);
   };
 }

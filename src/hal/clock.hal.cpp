@@ -42,8 +42,9 @@ namespace HAL::Clock
     {
       HAL::Error_Handler("HAL_RCC_ClockConfig failed");
     }
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_I2C1;
     PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+    PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
     {
       HAL::Error_Handler("HAL_RCCEx_PeriphCLKConfig failed");
