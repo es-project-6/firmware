@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-#define LCD_I2C_ADDRESS (0x7c >> 1)
+#define LCD_I2C_ADDRESS 62
 
 // lcd_instructions
 #define CLEAR_DISPLAY 0x01
