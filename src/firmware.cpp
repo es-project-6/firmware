@@ -21,15 +21,19 @@ void firmwareSetup()
 
   HAL::GPIO_Out *onboardLED = new HAL::GPIO_Out(ONBOARD_LED_PIN, ONBOARD_LED_GPIO_PORT);
   HAL::Piezo::init(PIEZO_PIN, PIEZO_GPIO_PORT);
-  HAL::Piezo::setEnabled(true);
   HAL::Piezo::setFrequency(1000);
   HAL::Piezo::setBlink(200);
+
+  uint8_t sensorValue;
 
   while (1)
   {
     onboardLED->toggle();
+    sensorValue = HAL::AdConverter::getValue();
     HAL::LcDisplay::clearDisplay();
-    HAL::LcDisplay::printf("Druck: %d", HAL::AdConverter::getValue());
+
+    HAL::Piezo::setEnabled(sensorValue > 3500);
+
     HAL_Delay(100);
   }
 }
