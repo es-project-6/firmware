@@ -2,6 +2,8 @@
 #include "stm32l0xx_hal.h"
 #include "hal/usart.hal.hpp"
 #include "hal/clock.hal.hpp"
+#include "hal/piezo.hal.hpp"
+
 #include <string.h>
 
 namespace HAL
@@ -32,6 +34,11 @@ namespace HAL
     while (1)
     {
     }
+  }
+
+  void SystickHandler()
+  {
+    HAL::Piezo::update();
   }
 }
 

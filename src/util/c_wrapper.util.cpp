@@ -1,5 +1,6 @@
 #include "util/c_wrapper.util.hpp"
 #include "firmware.hpp"
+#include "hal/hal.hpp"
 
 #ifdef __cplusplus
 extern "C"
@@ -14,6 +15,11 @@ extern "C"
   void wrappedFirmwareLoop()
   {
     firmwareLoop();
+  }
+
+  void wrappedFirmwareSysTick()
+  {
+    HAL::SystickHandler();
   }
 
 #ifdef __cplusplus

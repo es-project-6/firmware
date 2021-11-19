@@ -1,3 +1,5 @@
+#pragma once
+
 #include "hal/gpio.hal.hpp"
 
 namespace HAL

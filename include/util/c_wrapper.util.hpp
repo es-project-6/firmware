@@ -8,6 +8,7 @@ extern "C"
 
   void wrappedFirmwareSetup();
   void wrappedFirmwareLoop();
+  void wrappedFirmwareSysTick();
 
 #ifdef __cplusplus
 }

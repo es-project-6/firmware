@@ -8,6 +8,8 @@
 
 namespace HAL
 {
+  USART_HandleTypeDef USART::husart;
+
   void USART::init(uint32_t baudRate)
   {
     husart.Instance = USART2;

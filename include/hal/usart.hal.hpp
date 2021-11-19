@@ -8,7 +8,7 @@ namespace HAL
   class USART
   {
   private:
-    inline static USART_HandleTypeDef husart;
+    static USART_HandleTypeDef husart;
 
   public:
     static void init(uint32_t = 115200);
