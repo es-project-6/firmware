@@ -31,7 +31,7 @@ void firmwareSetup()
     onboardLED->toggle();
     sensorValue = HAL::AdConverter::getValue();
 
-    HAL::USART::printf("Druck: %d", sensorValue);
+    HAL::USART::printf("Druck: %d\r\n", sensorValue);
     HAL::LcDisplay::clearDisplay();
     HAL::LcDisplay::printf("Druck: %d", sensorValue);
     char bar[LCD_CHARACTERS_PER_LINE];
