@@ -60,8 +60,10 @@ namespace HAL
     static void writeInstruction(uint8_t value);
     static void writeData(uint8_t value);
     static void print(char character);
+    static void print(const char *str, size_t size);
     static void print(const char *str);
-    static void clearDisplay();
     static void printf(const char *format, ...);
+    static void clearDisplay();
+    static void setCursor(uint8_t row, uint8_t column);
   };
 }

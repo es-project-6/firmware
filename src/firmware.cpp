@@ -30,7 +30,17 @@ void firmwareSetup()
   {
     onboardLED->toggle();
     sensorValue = HAL::AdConverter::getValue();
+
+    HAL::USART::printf("Druck: %d", sensorValue);
     HAL::LcDisplay::clearDisplay();
+    HAL::LcDisplay::printf("Druck: %d", sensorValue);
+    char bar[LCD_CHARACTERS_PER_LINE];
+    for (size_t i = 0; i < LCD_CHARACTERS_PER_LINE; i++)
+    {
+      bar[i] = sensorValue * LCD_CHARACTERS_PER_LINE / 4096u > i ? 0xFF : 0x00;
+    }
+    HAL::LcDisplay::setCursor(1, 0);
+    HAL::LcDisplay::print(bar);
 
     HAL::Piezo::setEnabled(sensorValue > 3500);
 

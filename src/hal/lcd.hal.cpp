@@ -60,17 +60,21 @@ namespace HAL
     }
   }
 
-  void LcDisplay::print(const char *str)
+  void LcDisplay::print(const char *str, size_t size)
   {
     if (str == NULL)
     {
       return;
     }
-    char character = 0;
-    while ((character = *str++) != '\0')
+    for (size_t i = 0; i < size && i < LCD_CHARACTERS_PER_LINE; i++)
     {
-      print(character);
+      print(str[i]);
     }
+  }
+
+  void LcDisplay::print(const char *str)
+  {
+    return print(str, strlen(str));
   }
 
   void LcDisplay::printf(const char *format, ...)
@@ -90,4 +94,11 @@ namespace HAL
     cursorPosition = 0;
     delay(2);
   }
+
+  void LcDisplay::setCursor(uint8_t row, uint8_t column)
+  {
+    cursorPosition = (((row % LCD_LINES) * LCD_SECOND_LINE_BEGIN) + (column % LCD_CHARACTERS_PER_LINE));
+    writeInstruction(SET_DDRAM_ADDRESS | cursorPosition);
+  }
+
 }
