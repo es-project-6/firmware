@@ -15,6 +15,6 @@ namespace HAL
     static HAL_StatusTypeDef print(const char[], size_t);
     static HAL_StatusTypeDef print(const char *);
     static HAL_StatusTypeDef printf(const char *format, ...);
-    static void serialClearScreen();
+    static void clearScreen();
   };
 }

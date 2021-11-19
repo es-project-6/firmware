@@ -48,7 +48,7 @@ namespace HAL
     return print((char *)buff, strlen(buff));
   }
 
-  void USART::serialClearScreen()
+  void USART::clearScreen()
   {
     print("\033c");
   }
