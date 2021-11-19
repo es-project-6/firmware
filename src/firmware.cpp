@@ -24,7 +24,7 @@ void firmwareSetup()
   HAL::Piezo::setFrequency(1000);
   HAL::Piezo::setBlink(200);
 
-  uint8_t sensorValue;
+  uint16_t sensorValue;
 
   while (1)
   {
