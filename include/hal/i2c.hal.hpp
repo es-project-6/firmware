@@ -13,6 +13,6 @@ namespace HAL
 
   public:
     static void init();
-    static HAL_StatusTypeDef send(uint16_t, uint8_t *, uint16_t, uint32_t = 1000);
+    static void send(uint16_t, uint8_t *, uint16_t, uint32_t = 1000);
   };
 }

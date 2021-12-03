@@ -35,8 +35,12 @@ namespace HAL
     }
   }
 
-  HAL_StatusTypeDef I2C::send(uint16_t address, uint8_t *data, uint16_t size, uint32_t timeout)
+  void I2C::send(uint16_t address, uint8_t *data, uint16_t size, uint32_t timeout)
   {
-    return HAL_I2C_Master_Transmit(&hi2c1, address << 1, data, size, timeout);
+    const HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(&hi2c1, address << 1, data, size, timeout);
+    if (status != HAL_StatusTypeDef::HAL_OK)
+    {
+      Error_Handler("I2C::send failed");
+    }
   }
 }

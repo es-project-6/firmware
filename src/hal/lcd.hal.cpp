@@ -1,6 +1,7 @@
 #include "hal/lcd.hal.hpp"
 #include "hal/i2c.hal.hpp"
 #include "util/delay.hpp"
+#include "hal/lcd-font.hal.hpp"
 
 #include <string.h>
 #include <stdarg.h>
@@ -101,4 +102,30 @@ namespace HAL
     writeInstruction(SET_DDRAM_ADDRESS | cursorPosition);
   }
 
+  /**
+   * @brief select CG RAM Adress that the following read/write should be applied to
+   * 
+   * @param address CG RAM cell address, 0-7
+   */
+  void LcDisplay::setCgRamAddress(uint8_t address)
+  {
+    HAL::LcDisplay::writeInstruction(0b01000000 | address << 3);
+  }
+
+  void LcDisplay::addCustomChar(uint8_t address, const char *data)
+  {
+    LcDisplay::setCgRamAddress(address);
+    for (size_t i = 0; i < 8; i++)
+    {
+      HAL::LcDisplay::writeData(data[i]);
+    }
+  }
+
+  void LcDisplay::clearCustomChars()
+  {
+    for (size_t i = 0; i < 8; i++)
+    {
+      HAL::LcDisplay::addCustomChar(i, HAL::LcdFont::EMPTY);
+    }
+  }
 }

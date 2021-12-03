@@ -6,9 +6,12 @@
 #include "hal/adc.hal.hpp"
 #include "hal/i2c.hal.hpp"
 #include "hal/lcd.hal.hpp"
+#include "hal/lcd-font.hal.hpp"
 #include "hal/piezo.hal.hpp"
 
 #include "stdio.h"
+
+#define CUSTOM_CHAR_BELL 10
 
 void firmwareSetup()
 {
@@ -26,6 +29,19 @@ void firmwareSetup()
 
   uint16_t sensorValue;
 
+  HAL::LcDisplay::clearDisplay();
+  HAL::LcDisplay::clearCustomChars();
+
+  for (size_t i = 0; i < 8; i++)
+  {
+    HAL_Delay(1000);
+    HAL::LcDisplay::addCustomChar(i, HAL::LcdFont::CHESS);
+    char str[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    HAL::LcDisplay::print(str, 8);
+  }
+
+  return;
+
   while (1)
   {
     onboardLED->toggle();
@@ -38,7 +54,7 @@ void firmwareSetup()
     char bar[LCD_CHARACTERS_PER_LINE];
     for (size_t i = 0; i < LCD_CHARACTERS_PER_LINE; i++)
     {
-      bar[i] = sensorValue * LCD_CHARACTERS_PER_LINE / 4096u > i ? 0xFF : 0x00;
+      bar[i] = sensorValue * LCD_CHARACTERS_PER_LINE / 4096u > i ? 0xFF : 0x10;
     }
     HAL::LcDisplay::setCursor(1, 0);
     HAL::LcDisplay::print(bar);

@@ -65,5 +65,8 @@ namespace HAL
     static void printf(const char *format, ...);
     static void clearDisplay();
     static void setCursor(uint8_t row, uint8_t column);
+    static void addCustomChar(uint8_t address, const char *data);
+    static void setCgRamAddress(uint8_t address);
+    static void clearCustomChars();
   };
 }
