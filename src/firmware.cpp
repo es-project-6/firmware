@@ -31,13 +31,12 @@ void firmwareSetup()
 
   HAL::LcDisplay::clearDisplay();
   HAL::LcDisplay::clearCustomChars();
+  HAL::LcDisplay::print("\x0\x1\x2\x3\x4\x5\x6\x7\x8", 8);
 
   for (size_t i = 0; i < 8; i++)
   {
     HAL_Delay(1000);
     HAL::LcDisplay::addCustomChar(i, HAL::LcdFont::CHESS);
-    char str[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-    HAL::LcDisplay::print(str, 8);
   }
 
   return;
