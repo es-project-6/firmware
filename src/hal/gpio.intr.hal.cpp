@@ -17,21 +17,11 @@ namespace HAL
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_InitStruct.Pin = this->pin;
     GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(this->port, &GPIO_InitStruct);
 
-    SYSCFG->EXTICR[0] &= ~(SYSCFG_EXTICR1_EXTI1_Msk);
-    SYSCFG->EXTICR[0] |= SYSCFG_EXTICR1_EXTI1_PB;
     
-    // Enable triggers for edge detection
-    EXTI->IMR |= (1 << pin);
-    // mask out falling edge
-    EXTI->RTSR &= ~(1 << pin);
-    // Trigger on rising edge
-    EXTI->FTSR |= (1 << pin);
-
-    // buuton interrup is low priorty
-    NVIC_SetPriority(EXTI0_1_IRQn, 0x03);
-    NVIC_EnableIRQ(EXTI0_1_IRQn);
+    HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
   }
 }
