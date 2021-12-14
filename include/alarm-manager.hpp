@@ -2,7 +2,7 @@
 
 enum AlarmStatus { NONE, SETUP, DISARMED, ARMED, TRIPPED };
 
-class AlarmStatusManager
+class AlarmManager
 {
 private:
   static AlarmStatus status;

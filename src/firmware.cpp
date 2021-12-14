@@ -7,13 +7,13 @@
 #include "hal/i2c.hal.hpp"
 #include "hal/lcd.hal.hpp"
 #include "hal/piezo.hal.hpp"
-#include "alarm-status-manager.hpp"
+#include "alarm-manager.hpp"
 
 #include "stdio.h"
 
 void firmwareSetup()
 {
-  AlarmStatusManager::setStatus(AlarmStatus::SETUP);
+  AlarmManager::setStatus(AlarmStatus::SETUP);
 
   HAL::init();
   HAL::USART::init();
@@ -29,7 +29,7 @@ void firmwareSetup()
 
   uint16_t sensorValue;
 
-  AlarmStatusManager::setStatus(AlarmStatus::DISARMED);
+  AlarmManager::setStatus(AlarmStatus::DISARMED);
 
   while (1)
   {
@@ -37,9 +37,9 @@ void firmwareSetup()
     sensorValue = HAL::AdConverter::getValue();
 
     HAL::USART::clearScreen();
-    HAL::USART::printf("Status: %d\r\n", AlarmStatusManager::getStatus());
+    HAL::USART::printf("Status: %d\r\n", AlarmManager::getStatus());
     HAL::LcDisplay::clearDisplay();
-    HAL::LcDisplay::printf("Status: %d", AlarmStatusManager::getStatus());
+    HAL::LcDisplay::printf("Status: %d", AlarmManager::getStatus());
     char bar[LCD_CHARACTERS_PER_LINE];
     for (size_t i = 0; i < LCD_CHARACTERS_PER_LINE; i++)
     {
@@ -50,7 +50,7 @@ void firmwareSetup()
 
     if (sensorValue > 3500)
     {
-      AlarmStatusManager::setStatus(AlarmStatus::ARMED);
+      AlarmManager::setStatus(AlarmStatus::ARMED);
     }
 
     HAL_Delay(100);
