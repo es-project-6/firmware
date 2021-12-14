@@ -1,4 +1,7 @@
 #include "alarm-manager.hpp"
+#include "hal/piezo.hal.hpp"
+
+#include <math.h>
 
 AlarmStatus AlarmManager::status = AlarmStatus::NONE;
 uint16_t AlarmManager::thresholdWidth = POSSIBLE_THRESHOLD_WIDTHS[0];
@@ -6,6 +9,7 @@ uint16_t AlarmManager::thresholdOrigin = 0;
 
 void AlarmManager::setStatus(AlarmStatus newStatus)
 {
+  HAL::Piezo::setEnabled(newStatus == AlarmStatus::TRIPPED);
   status = newStatus;
 }
 
@@ -45,4 +49,17 @@ void AlarmManager::setThresholdOrigin(uint16_t newOrigin)
 uint16_t AlarmManager::getThresholdOrigin()
 {
   return thresholdOrigin;
+}
+
+void AlarmManager::checkThresholdExceeded(uint16_t newValue)
+{
+  if (getStatus() != AlarmStatus::ARMED)
+  {
+    return;
+  }
+
+  if (abs(newValue - thresholdOrigin) > thresholdWidth)
+  {
+    setStatus(AlarmStatus::TRIPPED);
+  }
 }

@@ -46,18 +46,18 @@ void firmwareSetup()
     HAL::LcDisplay::clearDisplay();
 
     sensorValue = HAL::AdConverter::getValue();
-
-    if (sensorValue > 3500)
-    {
-      AlarmManager::setStatus(AlarmStatus::TRIPPED);
-    }
+    AlarmManager::checkThresholdExceeded(sensorValue);
 
     if (AlarmManager::getStatus() == AlarmStatus::TRIPPED)
     {
-      HAL::Piezo::setEnabled(true);
       HAL::USART::print("ALARM!\r\n");
       HAL::LcDisplay::printf("ALARM!");
       continue;
+    }
+
+    if (AlarmManager::getStatus() == AlarmStatus::DISARMED)
+    {
+      AlarmManager::setThresholdOrigin(HAL::AdConverter::getValue());
     }
 
     char bar[LCD_CHARACTERS_PER_LINE];
