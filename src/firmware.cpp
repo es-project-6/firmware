@@ -7,11 +7,14 @@
 #include "hal/i2c.hal.hpp"
 #include "hal/lcd.hal.hpp"
 #include "hal/piezo.hal.hpp"
+#include "alarm-status-manager.hpp"
 
 #include "stdio.h"
 
 void firmwareSetup()
 {
+  AlarmStatusManager::setStatus(AlarmStatus::SETUP);
+
   HAL::init();
   HAL::USART::init();
   HAL::AdConverter::init();
@@ -26,15 +29,17 @@ void firmwareSetup()
 
   uint16_t sensorValue;
 
+  AlarmStatusManager::setStatus(AlarmStatus::DISARMED);
+
   while (1)
   {
     onboardLED->toggle();
     sensorValue = HAL::AdConverter::getValue();
 
     HAL::USART::clearScreen();
-    HAL::USART::printf("Druck: %d\r\n", sensorValue);
+    HAL::USART::printf("Status: %d\r\n", AlarmStatusManager::getStatus());
     HAL::LcDisplay::clearDisplay();
-    HAL::LcDisplay::printf("Druck: %d", sensorValue);
+    HAL::LcDisplay::printf("Status: %d", AlarmStatusManager::getStatus());
     char bar[LCD_CHARACTERS_PER_LINE];
     for (size_t i = 0; i < LCD_CHARACTERS_PER_LINE; i++)
     {
@@ -43,7 +48,10 @@ void firmwareSetup()
     HAL::LcDisplay::setCursor(1, 0);
     HAL::LcDisplay::print(bar);
 
-    HAL::Piezo::setEnabled(sensorValue > 3500);
+    if (sensorValue > 3500)
+    {
+      AlarmStatusManager::setStatus(AlarmStatus::ARMED);
+    }
 
     HAL_Delay(100);
   }
