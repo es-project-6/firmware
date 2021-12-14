@@ -34,7 +34,7 @@ void firmwareSetup()
   while (1)
   {
     HAL_Delay(100);
-    onboardLED->toggle();
+    // onboardLED->toggle();
     sensorValue = HAL::AdConverter::getValue();
     HAL::USART::clearScreen();
     HAL::LcDisplay::clearDisplay();
@@ -52,8 +52,8 @@ void firmwareSetup()
       continue;
     }
 
-    HAL::USART::printf("Status: %d\r\n", AlarmManager::getStatus());
-    HAL::LcDisplay::printf("Status: %d", AlarmManager::getStatus());
+    HAL::USART::printf("Status: %d, %d\r\n", AlarmManager::getStatus(), AlarmManager::getThresholdWidth());
+    HAL::LcDisplay::printf("Status: %d, %d", AlarmManager::getStatus(), AlarmManager::getThresholdWidth());
     char bar[LCD_CHARACTERS_PER_LINE];
     for (size_t i = 0; i < LCD_CHARACTERS_PER_LINE; i++)
     {
