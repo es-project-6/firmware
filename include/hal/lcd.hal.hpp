@@ -47,6 +47,8 @@
 #define LCD_SECOND_LINE_BEGIN 0x40 // the display can scroll horizontally through 64 characters
 #define LCD_SECOND_LINE_END (LCD_SECOND_LINE_BEGIN + LCD_CHARACTERS_PER_LINE)
 
+#define CUSTOM_CHAR_BELL 0
+
 namespace HAL
 {
   class LcDisplay
@@ -65,5 +67,8 @@ namespace HAL
     static void printf(const char *format, ...);
     static void clearDisplay();
     static void setCursor(uint8_t row, uint8_t column);
+    static void addCustomChar(uint8_t address, const char *data);
+    static void setCgRamAddress(uint8_t address);
+    static void clearCustomChars();
   };
 }

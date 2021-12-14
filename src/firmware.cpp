@@ -7,6 +7,7 @@
 #include "hal/adc.hal.hpp"
 #include "hal/i2c.hal.hpp"
 #include "hal/lcd.hal.hpp"
+#include "hal/lcd-font.hal.hpp"
 #include "hal/piezo.hal.hpp"
 #include "util/gui.hpp"
 #include "alarm-manager.hpp"
@@ -24,7 +25,8 @@ void firmwareSetup()
   HAL::AdConverter::init();
   HAL::I2C::init();
   HAL::LcDisplay::init();
-  HAL::USART::print("Setup done\r\n");
+  HAL::LcDisplay::clearCustomChars();
+  HAL::LcDisplay::addCustomChar(CUSTOM_CHAR_BELL, HAL::LcdFont::CHESS);
   new HAL::GPIO_INTERRUPT(MODE_BUTTON_PIN, MODE_BUTTON_PORT, EXTI2_3_IRQn);
   new HAL::GPIO_INTERRUPT(ARM_BUTTON_PIN, ARM_BUTTON_PORT, EXTI4_15_IRQn);
 
@@ -35,6 +37,7 @@ void firmwareSetup()
 
   uint16_t sensorValue;
 
+  HAL::USART::print("Setup done\r\n");
   AlarmManager::setStatus(AlarmStatus::DISARMED);
 
   while (1)
