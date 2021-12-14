@@ -29,16 +29,30 @@ void firmwareSetup()
 
   uint16_t sensorValue;
 
-  AlarmManager::setStatus(AlarmStatus::DISARMED);
+  AlarmManager::setStatus(AlarmStatus::ARMED);
 
   while (1)
   {
+    HAL_Delay(100);
     onboardLED->toggle();
     sensorValue = HAL::AdConverter::getValue();
-
     HAL::USART::clearScreen();
-    HAL::USART::printf("Status: %d\r\n", AlarmManager::getStatus());
     HAL::LcDisplay::clearDisplay();
+
+    if (sensorValue > 3500)
+    {
+      AlarmManager::setStatus(AlarmStatus::TRIPPED);
+    }
+
+    if (AlarmManager::getStatus() == AlarmStatus::TRIPPED)
+    {
+      HAL::Piezo::setEnabled(true);
+      HAL::USART::print("ALARM!\r\n");
+      HAL::LcDisplay::printf("ALARM!");
+      continue;
+    }
+
+    HAL::USART::printf("Status: %d\r\n", AlarmManager::getStatus());
     HAL::LcDisplay::printf("Status: %d", AlarmManager::getStatus());
     char bar[LCD_CHARACTERS_PER_LINE];
     for (size_t i = 0; i < LCD_CHARACTERS_PER_LINE; i++)
@@ -47,13 +61,6 @@ void firmwareSetup()
     }
     HAL::LcDisplay::setCursor(1, 0);
     HAL::LcDisplay::print(bar);
-
-    if (sensorValue > 3500)
-    {
-      AlarmManager::setStatus(AlarmStatus::ARMED);
-    }
-
-    HAL_Delay(100);
   }
 }
 
