@@ -1,6 +1,7 @@
 #include "firmware.hpp"
 #include "hal/hal.hpp"
 #include "hal/pins.hal.hpp"
+#include "hal/gpio.intr.hal.hpp"
 #include "hal/gpio_out.hal.hpp"
 #include "hal/usart.hal.hpp"
 #include "hal/adc.hal.hpp"
@@ -21,6 +22,8 @@ void firmwareSetup()
   HAL::I2C::init();
   HAL::LcDisplay::init();
   HAL::USART::print("Setup done\r\n");
+  new HAL::GPIO_INTERRUPT(MODE_BUTTON_PIN, MODE_BUTTON_PORT, EXTI2_3_IRQn);
+  new HAL::GPIO_INTERRUPT(ARM_BUTTON_PIN, ARM_BUTTON_PORT, EXTI4_15_IRQn);
 
   HAL::GPIO_Out *onboardLED = new HAL::GPIO_Out(ONBOARD_LED_PIN, ONBOARD_LED_GPIO_PORT);
   HAL::Piezo::init(PIEZO_PIN, PIEZO_GPIO_PORT);
