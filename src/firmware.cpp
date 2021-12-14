@@ -51,19 +51,25 @@ void firmwareSetup()
     if (AlarmManager::getStatus() == AlarmStatus::TRIPPED)
     {
       HAL::USART::print("ALARM!\r\n");
-      HAL::LcDisplay::printf("ALARM!");
+      HAL::LcDisplay::printf("     ALARM!     ");
       continue;
     }
 
     if (AlarmManager::getStatus() == AlarmStatus::DISARMED)
     {
       AlarmManager::setThresholdOrigin(HAL::AdConverter::getValue());
+      HAL::USART::printf("Not Armed\r\n");
+      HAL::LcDisplay::printf("   Not Armed   ");
+    }
+
+    if (AlarmManager::getStatus() == AlarmStatus::ARMED)
+    {
+      HAL::USART::printf("!! ARMED !!\r\n");
+      HAL::LcDisplay::printf("   !! ARMED !!   ");
     }
 
     char bar[LCD_CHARACTERS_PER_LINE];
     GUI::getPressureDisplayStr(bar, sensorValue, SENSOR_MAX, LCD_CHARACTERS_PER_LINE, AlarmManager::getThresholdOrigin(), AlarmManager::getThresholdWidth());
-    HAL::USART::printf("%d, %d, %d\r\n", AlarmManager::getStatus(), AlarmManager::getThresholdOrigin(), AlarmManager::getThresholdWidth());
-    HAL::LcDisplay::printf("%d, %d, %d", AlarmManager::getStatus(), AlarmManager::getThresholdOrigin(), AlarmManager::getThresholdWidth());
     HAL::LcDisplay::setCursor(1, 0);
     HAL::LcDisplay::print(bar);
 
