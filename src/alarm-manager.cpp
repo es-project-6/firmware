@@ -2,6 +2,7 @@
 
 AlarmStatus AlarmManager::status = AlarmStatus::NONE;
 uint16_t AlarmManager::thresholdWidth = POSSIBLE_THRESHOLD_WIDTHS[0];
+uint16_t AlarmManager::thresholdOrigin = 0;
 
 void AlarmManager::setStatus(AlarmStatus newStatus)
 {
@@ -34,4 +35,14 @@ void AlarmManager::toggleThresholdWidth()
     }
   }
   thresholdWidth = POSSIBLE_THRESHOLD_WIDTHS[0];
+}
+
+void AlarmManager::setThresholdOrigin(uint16_t newOrigin)
+{
+  thresholdOrigin = newOrigin;
+}
+
+uint16_t AlarmManager::getThresholdOrigin()
+{
+  return thresholdOrigin;
 }

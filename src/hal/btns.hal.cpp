@@ -1,5 +1,6 @@
 #include "hal/btns.hal.hpp";
 #include "hal/pins.hal.hpp";
+#include "hal/adc.hal.hpp"
 #include "alarm-manager.hpp"
 
 namespace HAL
@@ -19,6 +20,7 @@ namespace HAL
       }
       else
       {
+        AlarmManager::setThresholdOrigin(HAL::AdConverter::getValue());
         AlarmManager::setStatus(AlarmStatus::ARMED);
       }
       break;

@@ -19,6 +19,7 @@ class AlarmManager
 private:
   static AlarmStatus status;
   static uint16_t thresholdWidth;
+  static uint16_t thresholdOrigin;
 
 public:
   static void setStatus(AlarmStatus newStatus);
@@ -26,4 +27,7 @@ public:
   static void setThresholdWidth(uint16_t newWidth);
   static uint16_t getThresholdWidth();
   static void toggleThresholdWidth();
+  static void setThresholdOrigin(uint16_t newOrigin);
+  static uint16_t getThresholdOrigin();
+  static void checkThresholdExceeded(uint16_t newValue);
 };
