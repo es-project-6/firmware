@@ -1,5 +1,7 @@
 #pragma once
 
+#include "stm32l0xx_hal.h"
+
 #define ONBOARD_LED_PIN GPIO_PIN_5
 #define ONBOARD_LED_GPIO_PORT GPIOA
 #define PIEZO_PIN GPIO_PIN_6
