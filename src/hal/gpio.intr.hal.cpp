@@ -3,11 +3,12 @@
 
 namespace HAL
 {
-  GPIO_INTERRUPT::GPIO_INTERRUPT(uint32_t pin)
+  GPIO_INTERRUPT::GPIO_INTERRUPT(uint32_t pin, GPIO_TypeDef *port, IRQn_Type interruptHandler)
   {
     this->pin = pin;
     // Interruptline nur für Port B nutzbar
-    this->port = GPIOB;
+    this->port = port;
+    this->itrHandler = interruptHandler;
     this->init();
   }
 
@@ -21,7 +22,7 @@ namespace HAL
     HAL_GPIO_Init(this->port, &GPIO_InitStruct);
 
     
-    HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
+    HAL_NVIC_SetPriority(itrHandler, 0, 0);
+    HAL_NVIC_EnableIRQ(itrHandler); //EXTI2_3_IRQn
   }
 }

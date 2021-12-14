@@ -11,10 +11,11 @@ namespace HAL
   protected:
     uint32_t pin;
     GPIO_TypeDef *port;
+    IRQn_Type itrHandler;
     void init();
 
   public:
-    GPIO_INTERRUPT(uint32_t);
+    GPIO_INTERRUPT(uint32_t pin, GPIO_TypeDef *port, IRQn_Type interruptHandler);
     ~GPIO_INTERRUPT();
   };
 }
