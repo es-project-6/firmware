@@ -1,5 +1,7 @@
 #pragma once
 
+#include "stm32l0xx_hal.h"
+
 #define ONBOARD_LED_PIN GPIO_PIN_5
 #define ONBOARD_LED_GPIO_PORT GPIOA
 #define PIEZO_PIN GPIO_PIN_6
@@ -9,3 +11,9 @@
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
+
+#define MODE_BUTTON_PIN GPIO_PIN_3
+#define MODE_BUTTON_PORT GPIOB
+
+#define ARM_BUTTON_PIN GPIO_PIN_10
+#define ARM_BUTTON_PORT GPIOA
