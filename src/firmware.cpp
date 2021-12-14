@@ -32,7 +32,7 @@ void firmwareSetup()
 
   uint16_t sensorValue;
 
-  AlarmManager::setStatus(AlarmStatus::ARMED);
+  AlarmManager::setStatus(AlarmStatus::DISARMED);
 
   while (1)
   {

@@ -13,7 +13,14 @@ namespace HAL
       break;
 
     case ARM_BUTTON_PIN:
-      /* code */
+      if (AlarmManager::getStatus() != AlarmStatus::DISARMED)
+      {
+        AlarmManager::setStatus(AlarmStatus::DISARMED);
+      }
+      else
+      {
+        AlarmManager::setStatus(AlarmStatus::ARMED);
+      }
       break;
 
     default:
