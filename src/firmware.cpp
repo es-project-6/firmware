@@ -61,7 +61,7 @@ void firmwareSetup()
     }
 
     char bar[LCD_CHARACTERS_PER_LINE];
-    GUI::getPressureDisplayStr(bar, sensorValue, SENSOR_MAX, LCD_CHARACTERS_PER_LINE, .2 * SENSOR_MAX, .8 * SENSOR_MAX);
+    GUI::getPressureDisplayStr(bar, sensorValue, SENSOR_MAX, LCD_CHARACTERS_PER_LINE, AlarmManager::getThresholdOrigin(), AlarmManager::getThresholdWidth());
     HAL::USART::printf("%d, %d, %d\r\n", AlarmManager::getStatus(), AlarmManager::getThresholdOrigin(), AlarmManager::getThresholdWidth());
     HAL::LcDisplay::printf("%d, %d, %d", AlarmManager::getStatus(), AlarmManager::getThresholdOrigin(), AlarmManager::getThresholdWidth());
     HAL::LcDisplay::setCursor(1, 0);
