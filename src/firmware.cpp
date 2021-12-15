@@ -26,7 +26,8 @@ void firmwareSetup()
   HAL::I2C::init();
   HAL::LcDisplay::init();
   HAL::LcDisplay::clearCustomChars();
-  HAL::LcDisplay::addCustomChar(CUSTOM_CHAR_BELL, HAL::LcdFont::CHESS);
+  HAL::LcDisplay::addCustomChar(CUSTOM_CHAR_BELL, HAL::LcdFont::BELL);
+
   new HAL::GPIO_INTERRUPT(MODE_BUTTON_PIN, MODE_BUTTON_PORT, EXTI2_3_IRQn);
   new HAL::GPIO_INTERRUPT(ARM_BUTTON_PIN, ARM_BUTTON_PORT, EXTI4_15_IRQn);
 
@@ -54,7 +55,8 @@ void firmwareSetup()
     if (AlarmManager::getStatus() == AlarmStatus::TRIPPED)
     {
       HAL::USART::print("ALARM!\r\n");
-      HAL::LcDisplay::printf("     ALARM!     ");
+      HAL::LcDisplay::printf(" \x1 \x1 ALARM! \x1 \x1 ");
+      HAL::LcDisplay::printf("press any key...");
       continue;
     }
 

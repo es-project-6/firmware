@@ -47,7 +47,7 @@
 #define LCD_SECOND_LINE_BEGIN 0x40 // the display can scroll horizontally through 64 characters
 #define LCD_SECOND_LINE_END (LCD_SECOND_LINE_BEGIN + LCD_CHARACTERS_PER_LINE)
 
-#define CUSTOM_CHAR_BELL 0
+#define CUSTOM_CHAR_BELL 0x01
 
 namespace HAL
 {
