@@ -62,7 +62,7 @@ void firmwareSetup()
       break;
 
     case AlarmStatus::DISARMED:
-      AlarmManager::setThresholdOrigin(HAL::AdConverter::getValue());
+      AlarmManager::setThresholdOrigin(sensorValue);
       HAL::USART::printf("Not Armed\r\n");
       HAL::LcDisplay::printf("   Not Armed   ");
       break;
