@@ -22,7 +22,7 @@ namespace HAL
     HAL_GPIO_Init(this->port, &GPIO_InitStruct);
 
     
-    HAL_NVIC_SetPriority(itrHandler, 0, 0);
+    HAL_NVIC_SetPriority(itrHandler, 4, 5);
     HAL_NVIC_EnableIRQ(itrHandler); //EXTI2_3_IRQn
   }
 }
