@@ -52,25 +52,28 @@ void firmwareSetup()
     sensorValue = HAL::AdConverter::getValue();
     AlarmManager::checkThresholdExceeded(sensorValue);
 
-    if (AlarmManager::getStatus() == AlarmStatus::TRIPPED)
+    switch (AlarmManager::getStatus())
     {
+    case AlarmStatus::TRIPPED:
       HAL::USART::print("ALARM!\r\n");
       HAL::LcDisplay::printf(" \x1 \x1 ALARM! \x1 \x1 ");
       HAL::LcDisplay::printf("press any key...");
       continue;
-    }
+      break;
 
-    if (AlarmManager::getStatus() == AlarmStatus::DISARMED)
-    {
+    case AlarmStatus::DISARMED:
       AlarmManager::setThresholdOrigin(HAL::AdConverter::getValue());
       HAL::USART::printf("Not Armed\r\n");
       HAL::LcDisplay::printf("   Not Armed   ");
-    }
+      break;
 
-    if (AlarmManager::getStatus() == AlarmStatus::ARMED)
-    {
+    case AlarmStatus::ARMED:
       HAL::USART::printf("!! ARMED !!\r\n");
       HAL::LcDisplay::printf("   !! ARMED !!   ");
+      break;
+
+    default:
+      break;
     }
 
     char bar[LCD_CHARACTERS_PER_LINE];
